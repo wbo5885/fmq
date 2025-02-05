@@ -1,0 +1,103 @@
+C51 COMPILER V9.60.7.0   NIXIE                                                             08/09/2024 09:02:10 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE NIXIE
+OBJECT MODULE PLACED IN .\Objects\NIXIE.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE NIXIE.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\NIX
+                    -IE.lst) TABS(2) OBJECT(.\Objects\NIXIE.obj)
+
+line level    source
+
+   1          #include "NIXIE.h"
+   2          
+   3          
+   4          #define GET_BIT_VAL(byte, pos)  (byte & (1 << pos))
+   5          
+   6          // 索引对应表格参见：
+   7          // https://www.yuque.com/icheima/stc8h/kmz2mllvxs1uvdfy#lLhhp
+   8          u8 code LED_TABLE[] =
+   9          {
+  10            // 0  1  2  -> 9  (索引0,1,2...9)
+  11            0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90,
+  12            // 0. 1. 2. -> 9. (索引10,11,12....19)
+  13            0x40,0x79,0x24,0x30,0x19,0x12,0x02,0x78,0x00,0x10,
+  14            // . -            (索引20,21)
+  15            0x7F, 0xBF,
+  16            // AbCdEFHJLPqU   (索引22,23,24....33)
+  17            0x88,0x83,0xC6,0xA1,0x86,0x8E,0x89,0xF1,0xC7,0x8C,0x98,0xC1
+  18          };
+  19          
+  20          // 实现 or 定义
+  21          
+  22          void NIXIE_init() {
+  23   1        NIXIE_GPIO_INIT();
+  24   1      }
+  25          
+  26          #define RCK_ACTION()                         \
+  27            /* 寄存器的锁存操作（所有的IO口并行输出）*/    \
+  28            NIX_RCK = 0;                               \
+  29            NOP2();                                    \
+  30            NIX_RCK = 1;                               \
+  31            NOP2();
+  32          
+  33          #define SCK_ACTION()            \
+  34            /* 寄存器的移位操作*/         \
+  35            NIX_SCK = 0;                  \
+  36            NOP2();                       \
+  37            NIX_SCK = 1;                  \
+  38            NOP2();                       \
+  39          
+  40          /***
+  41          写出一个字节
+  42          */
+  43          void NIXIE_out(u8 byte) {
+  44   1        char i;
+  45   1        for(i = 7; i >= 0; i--) {
+  46   2          NIX_DI = GET_BIT_VAL(byte, i);
+  47   2      
+  48   2          /* 寄存器的移位操作*/
+  49   2          SCK_ACTION();
+  50   2        }
+  51   1      }
+  52          
+  53          void NIXIE_show(u8 a_num, u8 b_idx) {
+  54   1        // SEG段位端，设定显示的内容 7.  (Segment)
+C51 COMPILER V9.60.7.0   NIXIE                                                             08/09/2024 09:02:10 PAGE 2   
+
+  55   1        // 8bit 先发出去的作为高位
+  56   1        NIXIE_out(a_num);
+  57   1      
+  58   1        // COM公共端，设置显示哪几个数码管
+  59   1        // 0b 1111 1011 显示内容和二进制顺序相反
+  60   1        // 0b 0000 0100 显示内容和二进制顺序相反
+  61   1        NIXIE_out(b_idx);
+  62   1      
+  63   1        // 寄存器的锁存操作（所有的IO口并行输出）
+  64   1        RCK_ACTION();
+  65   1      }
+  66          
+  67          // 每次只显示1个数字
+  68          // num 数字在LED_TABLE的索引位置
+  69          // pos 显示在什么位置 [0, 7]
+  70          void NIXIE_display(u8 num, u8 pos) { // 2-> 0b0000 0100
+  71   1      
+  72   1        u8 a_num = LED_TABLE[num]; // 决定了显示的内容
+  73   1        u8 b_idx = 1 << pos;       // 哪1个位置显示内容
+  74   1      
+  75   1        NIXIE_show(a_num, b_idx);
+  76   1      
+  77   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     98    ----
+   CONSTANT SIZE    =     34    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
