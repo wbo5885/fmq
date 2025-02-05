@@ -23,11 +23,12 @@
 //========================================================================
 void delay_ms(unsigned char ms)
 {
-	unsigned int i;
-	do{
-		i = MAIN_Fosc / 10000;
-		while(--i);
-	}while(--ms);
+	volatile unsigned int i;
+	while(ms--) {
+		for(i = MAIN_Fosc / 10000; i > 0; i--) {
+			; // ø’—≠ª∑—” ±
+		}
+	}
 }
 
 void delay_X_ms(unsigned int ms){
