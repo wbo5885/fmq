@@ -1,0 +1,133 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              02/05/2025 10:12:01 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "config.h"
+   2          #include "GPIO.h"
+   3          #include "Delay.h"
+   4          #include "Buzzer.h"
+   5          
+   6          /****************
+   7          手动驱动蜂鸣器
+   8          ****************/
+   9          
+  10          // 音调序列 (1-7 对应 do-si)
+  11          u8 code notes[] = {
+  12            // 前奏
+  13            5, 1, 3, 5,     // 前奏第一小节
+  14            5, 1, 3, 5,     // 前奏第二小节
+  15            
+  16            // 主歌部分
+  17            5, 5, 6, 2,     // 起来！
+  18            1, 1, 6, 5,     // 不愿
+  19            3, 3, 2, 1,     // 做奴隶的
+  20            6, 6, 5,        // 人们！
+  21            
+  22            5, 5, 6, 2,     // 把我们的
+  23            1, 1, 6, 5,     // 血肉筑成
+  24            3, 3, 2, 1,     // 我们新的
+  25            2, 2, 1,        // 长城！
+  26            
+  27            6, 1, 3, 5,     // 中华民族
+  28            5, 3, 2, 1,     // 到了最危险的时候
+  29            6, 1, 3, 5,     // 每个人被迫着
+  30            5, 3, 2, 1,     // 发出最后的吼声
+  31            
+  32            // 副歌
+  33            5, 5, 5,        // 起来！
+  34            5, 3, 2, 1,     // 起来！
+  35            5, 5, 5,        // 起来！
+  36            3, 5, 6, 5,     // 我们万众一心
+  37            2, 3, 5,        // 冒着敌人的炮火
+  38            3, 2, 1, 6,     // 前进！
+  39            5, 5, 6, 2, 1   // 前进！前进！进！
+  40          };
+  41          
+  42          // 时值序列 (单位: 100ms)
+  43          u8 code durations[] = {
+  44            // 前奏
+  45            4, 4, 4, 4,     // 前奏第一小节
+  46            4, 4, 4, 4,     // 前奏第二小节
+  47            
+  48            // 主歌部分
+  49            4, 2, 2, 4,     // 起来！
+  50            4, 2, 2, 4,     // 不愿
+  51            2, 2, 2, 2,     // 做奴隶的
+  52            4, 2, 6,        // 人们！
+  53            
+  54            4, 2, 2, 4,     // 把我们的
+C51 COMPILER V9.60.7.0   MAIN                                                              02/05/2025 10:12:01 PAGE 2   
+
+  55            4, 2, 2, 4,     // 血肉筑成
+  56            2, 2, 2, 2,     // 我们新的
+  57            4, 2, 6,        // 长城！
+  58            
+  59            4, 4, 4, 4,     // 中华民族
+  60            4, 4, 4, 4,     // 到了最危险的时候
+  61            4, 4, 4, 4,     // 每个人被迫着
+  62            4, 4, 4, 4,     // 发出最后的吼声
+  63            
+  64            // 副歌
+  65            4, 4, 8,        // 起来！
+  66            4, 4, 4, 4,     // 起来！
+  67            4, 4, 8,        // 起来！
+  68            2, 2, 2, 2,     // 我们万众一心
+  69            4, 4, 6,        // 冒着敌人的炮火
+  70            2, 2, 4, 4,     // 前进！
+  71            4, 4, 4, 4, 8   // 前进！前进！进！
+  72          };
+  73          
+  74          
+  75          // 初始化GPIO
+  76          void main() {
+  77   1        u8 i = 0, len = 0;
+  78   1        u16 delay;
+  79   1        // 扩展寄存器使能
+  80   1        EAXSFR(); 
+  81   1        Buzzer_init();
+  82   1        EA = 1;
+  83   1        
+  84   1        len = sizeof(notes) / sizeof(notes[0]);
+  85   1        
+  86   1        for(i = 0; i < len; i++){
+  87   2          // 按照指定音调输出
+  88   2          Buzzer_beep(notes[i]);
+  89   2          
+  90   2          // 根据每个音调进行休眠
+  91   2          delay = durations[i] * 100;
+  92   2          delay_X_ms(delay);
+  93   2          
+  94   2          // 短暂的间隔
+  95   2          Buzzer_stop();
+  96   2          delay_ms(20);
+  97   2        }
+  98   1        
+  99   1        // 停止
+ 100   1        Buzzer_stop();
+ 101   1        
+ 102   1        while(1) {
+ 103   2      
+ 104   2        }
+ 105   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     76    ----
+   CONSTANT SIZE    =    160    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.7.0   MAIN                                                              02/05/2025 10:12:01 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
