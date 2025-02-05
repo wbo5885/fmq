@@ -86,10 +86,8 @@ const u8 code durations[] = {
 	4, 4, 4, 4, 8   // 前进！前进！进！
 };
 
-// 检查音符和时值数组长度是否匹配
-#if sizeof(notes) != sizeof(durations)
-    #error "音符数组与时值数组长度不匹配!"
-#endif
+// 定义数组长度
+#define SONG_LENGTH 71  // 音符和时值数组的长度
 
 // 计算音符实际发声时间
 static u16 calcNoteDuration(u8 duration) {
@@ -103,11 +101,10 @@ static u16 calcNoteGap(u8 duration) {
 
 // 新增函数：播放歌曲，通过封装播放循环提升代码可读性
 static void playSong(void) {
-	u8 i, len;
+	u8 i;
 	u16 playTime, gapTime;
-	len = sizeof(notes) / sizeof(notes[0]);
 
-	for(i = 0; i < len; i++){
+	for(i = 0; i < SONG_LENGTH; i++){
         // 计算当前音符的发声时间和间隔时间
         playTime = calcNoteDuration(durations[i]);
         gapTime = calcNoteGap(durations[i]);

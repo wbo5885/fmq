@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 10:12:02 PAGE 1   
+C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 17:31:20 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE STC8H_PWM
@@ -62,7 +62,7 @@ line level    source
   52   2          PWMA_Duty1(PWMx->PWM_Duty);
   53   2          
   54   2          return  SUCCESS;
-C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 10:12:02 PAGE 2   
+C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 17:31:20 PAGE 2   
 
   55   2        }
   56   1        
@@ -126,7 +126,7 @@ line level    source
  114   3            PWMA_CC3NE_Disable();   //关闭输入捕获/比较输出
  115   3            PWMA_ENO &= ~ENO3N;
  116   3          }
-C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 10:12:02 PAGE 3   
+C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 17:31:20 PAGE 3   
 
  117   2          
  118   2          PWMA_Duty3(PWMx->PWM_Duty);
@@ -190,7 +190,7 @@ line level    source
  176   2      
  177   2          if(PWMx->PWM_EnoSelect & ENO5P)
  178   2          {
-C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 10:12:02 PAGE 4   
+C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 17:31:20 PAGE 4   
 
  179   3            PWMB_CC5E_Enable();     //开启输入捕获/比较输出
  180   3            PWMB_ENO |= ENO5P;
@@ -254,7 +254,7 @@ line level    source
  238   1        {
  239   2          PWMB_CC8E_Disable();    //关闭输入捕获/比较输出
  240   2          PWMB_CC8S_Direction(CCAS_OUTPUT);   //CCnS仅在通道关闭时才是可写的
-C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 10:12:02 PAGE 5   
+C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 17:31:20 PAGE 5   
 
  241   2          PWMB_OC8ModeSet(PWMx->PWM_Mode);    //设置输出比较模式
  242   2      
@@ -318,7 +318,7 @@ line level    source
  300   2          case PWM4:
  301   2            PWMA_Duty4(PWMx->PWM4_Duty);
  302   2          break;
-C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 10:12:02 PAGE 6   
+C51 COMPILER V9.60.7.0   STC8H_PWM                                                         02/05/2025 17:31:20 PAGE 6   
 
  303   2      
  304   2          case PWM5:

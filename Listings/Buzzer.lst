@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   BUZZER                                                            02/05/2025 10:12:02 PAGE 1   
+C51 COMPILER V9.60.7.0   BUZZER                                                            02/05/2025 17:31:21 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE BUZZER
@@ -62,7 +62,7 @@ line level    source
   49   1      }
   50          
   51          // 按照指定频率播放
-C51 COMPILER V9.60.7.0   BUZZER                                                            02/05/2025 10:12:02 PAGE 2   
+C51 COMPILER V9.60.7.0   BUZZER                                                            02/05/2025 17:31:21 PAGE 2   
 
   52          void Buzzer_play(u16 hz_val){
   53   1        PWM_config(hz_val);

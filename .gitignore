@@ -1,0 +1,28 @@
+# IDE配置文件
+.vscode/
+*.uvgui.*
+*.uvopt
+*.uvproj
+
+# 编译输出目录
+Listings/
+Objects/
+
+# 其他临时文件
+*.bak
+*.dep
+*.lst
+*.map
+*.hex
+*.bin
+*.lnp
+*.axf
+*.crf
+*.d
+*.o
+*.htm
+*.iex
+*.tra
+*.plg
+*.sct
+*.uvguix.* 
